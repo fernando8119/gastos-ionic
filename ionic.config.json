@@ -1,0 +1,7 @@
+{
+  "name": "gastos-ionic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
