@@ -1,0 +1,31 @@
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title class="ion-text-center">OPERACIONES TOTALES</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-list-header>
+          <ion-label>
+            <h4>Operaciones Totales<small></small></h4>
+          </ion-label>
+        </ion-list-header>
+
+        <ion-item *ngFor="let operacion of operaciones" [ngClass]="getFilaColor(operacion.cantidad)">
+          <ion-label>{{operacion.descripcion}}</ion-label>
+          <ion-label>{{operacion.cantidad}}</ion-label>
+          <ion-label>{{operacion.categoria}}</ion-label>
+          <ion-label>{{operacion.fecha | date:'dd-MM-yyyy' }}</ion-label>
+
+          <ion-buttons slot="end">
+            <ion-button [routerLink]="['/editar-operacion', operacion._id]" fill="outline" size="small">Editar</ion-button>
+            <ion-button (click)="borrar(operacion._id)" fill="outline" size="small">Borrar</ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-list>
+
+      <ion-button (click)="botonNuevo()" expand="full" color="primary" class="ion-margin-top">AÑADIR</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

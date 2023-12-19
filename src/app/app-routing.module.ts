@@ -1,22 +1,20 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { OperacionComponent } from './pages/operacion/operacion.component';
+import { OperacionesComponent } from './pages/operaciones/operaciones.component';
+import { EditarOperacionComponent } from './pages/editar-operacion/editar-operacion.component';
+
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'folder/Inbox',
-    pathMatch: 'full'
-  },
-  {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  }
+  { path: 'operaciones', component: OperacionesComponent },
+  { path: 'operacion/:id', component: OperacionComponent },
+  { path: 'editar-operacion/:id', component: EditarOperacionComponent },
+  { path: '**', pathMatch: 'full', redirectTo: 'operaciones' },
+
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
-  ],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
