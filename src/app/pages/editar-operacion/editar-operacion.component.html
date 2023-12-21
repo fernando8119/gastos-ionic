@@ -6,8 +6,8 @@
 
 <ion-content>
   <ion-item *ngIf="editooperacion" class="form-group">
-
-    <ion-label for="descripcion">Descripción</ion-label>
+    <!-- Descripción -->
+    <ion-label position="floating">Descripción</ion-label>
     <ion-input
       type="text"
       name="descripcion"
@@ -17,9 +17,12 @@
       minlength="5"
       #descripcion="ngModel">
     </ion-input>
-    <ion-note *ngIf="descripcion.invalid && descripcion.touched" color="danger">Sólo letras y mínimo de 5 caracteres</ion-note>
+    <ion-note *ngIf="descripcion.invalid && descripcion.touched" color="danger">
+      Sólo letras y mínimo de 5 caracteres
+    </ion-note>
 
-    <ion-label for="cantidad">Cantidad</ion-label>
+    <!-- Cantidad -->
+    <ion-label position="floating">Cantidad</ion-label>
     <ion-input
       type="number"
       name="cantidad"
@@ -30,7 +33,8 @@
       #cantidad="ngModel">
     </ion-input>
 
-    <ion-label for="categoria">Categoría</ion-label>
+    <!-- Categoría -->
+    <ion-label position="floating">Categoría</ion-label>
     <ion-select
       name="categoria"
       [(ngModel)]="editooperacion.categoria"
@@ -40,7 +44,8 @@
     </ion-select>
     <ion-note *ngIf="categoria.invalid && categoria.touched" color="danger">Campo requerido</ion-note>
 
-    <ion-label for="fecha">Fecha</ion-label>
+    <!-- Fecha -->
+    <ion-label position="floating">Fecha</ion-label>
     <ion-datetime
       displayFormat="YYYY-MM-DD"
       name="fecha"
@@ -49,6 +54,5 @@
     </ion-datetime>
 
     <ion-button (click)="guardarCambios()" expand="full" color="primary" class="ion-margin-top">Guardar</ion-button>
-
   </ion-item>
 </ion-content>

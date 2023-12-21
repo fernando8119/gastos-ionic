@@ -45,40 +45,24 @@ export class OperacionesComponent implements OnInit {
 
   borrar(id: string | undefined) {
     if (id !== undefined) {
-      Swal.fire({
-        title: '¿Estás seguro?',
-        text: '¡No podrás revertir esto!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, bórralo'
-      }).then((result: any) => {
-        if (result.isConfirmed) {
-          // Lógica para borrar el elemento
+      
+      
           this.operacionesService.borrar(id).subscribe(() => {
             // Elimina el elemento localmente en tu arreglo de operaciones.
             this.operaciones = this.operaciones.filter(gasto => gasto._id !== id);
-            Swal.fire(
-              '¡Borrado!',
-              'Tu operación ha sido borrada.',
-              'success'
-            );
+          
           });
         }
-      });
-    } else {
-      console.error('El ID es undefined. No se puede borrar.');
-    }
-  }
-
+      }
+    
+  
 
   getFilaColor(cantidad: number): string {
     return cantidad >= 0 ? 'positivo' : 'negativo';
   }
 
   botonNuevo() {
-    Swal.fire('¡Se procede a añadir operación!');
+    // Swal.fire('¡Se procede a añadir operación!');
     this.router.navigate(['/operacion/nueva']);
 
   }

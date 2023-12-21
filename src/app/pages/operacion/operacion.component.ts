@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CategoriasService } from '../../services/categorias.service';
 import { Categoria } from 'src/app/models/categoria'
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-operacion',
@@ -31,7 +32,7 @@ export class OperacionComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router) {
 
-    this.categoriasService.obtenerCategorias().subscribe((categorias: any) => {
+    this.categoriasService.obtenerCategorias().subscribe((categorias) => {
       this.categorias = categorias;
     });
 
@@ -46,10 +47,7 @@ export class OperacionComponent implements OnInit {
 
   guardar(forma: NgForm) {
 
-    Swal.fire({
-      title: "Operación añadida",
-      icon: "success"
-    });
+    
 
     this.operacionesService
   .agregarOperaciones(this.nuevaOperacion)
