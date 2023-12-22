@@ -5,6 +5,7 @@ import { NgForm, FormsModule } from '@angular/forms';
 import { OperacionesService } from '../../services/operaciones.service';
 import { CategoriasService } from 'src/app/services/categorias.service';
 import { Categoria } from 'src/app/models/categoria';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-editar-operacion',
@@ -21,7 +22,8 @@ export class EditarOperacionComponent implements OnInit {
     private operacionesService: OperacionesService,
     private categoriasService: CategoriasService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private alertController: AlertController
   ) {
     this.categoriasService.obtenerCategorias().subscribe((categorias: any) => {
       this.categorias = categorias;
@@ -41,7 +43,7 @@ export class EditarOperacionComponent implements OnInit {
       }
     });
 
-    // Mensaje de consola para reemplazar Swal.fire
+  
     console.log(`Editando el elemento con ID: ${id}`);
   }
 
@@ -56,17 +58,61 @@ export class EditarOperacionComponent implements OnInit {
       }
     });
   }
+  
 
   guardarCambios(): void {
-    // Mensaje de consola para reemplazar Swal.fire
+    this.presentConfirmAlert();
+  }
+
+  async presentConfirmAlert() {
+    const alert = await this.alertController.create({
+      header: 'Confirmación',
+      message: '¿Estás seguro que quieres guardar los cambios?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Operación de guardar cancelada');
+          }
+        }, {
+          text: 'Guardar',
+          handler: () => {
+            this.saveChanges();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  saveChanges() {
     this.operacionesService.editoOperaciones(this.editooperacion).subscribe({
       next: () => {
+        console.log('Operación editada exitosamente');
+        this.presentAlert('Operación editada exitosamente');
         this.router.navigate(['/operaciones']);
       },
-      
+      error: (error) => {
+        console.error('Error al editar la operación', error);
+        this.presentAlert('Error al editar la operación');
+      }
     });
-    
+  }
 
-    // Continuar con la lógica de edición aquí...
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Mensaje',
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 }
+
+  
+
+

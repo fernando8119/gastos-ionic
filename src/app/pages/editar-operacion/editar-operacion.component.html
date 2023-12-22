@@ -5,54 +5,65 @@
 </ion-header>
 
 <ion-content>
-  <ion-item *ngIf="editooperacion" class="form-group">
+  <form *ngIf="editooperacion" class="ion-padding">
     <!-- Descripción -->
-    <ion-label position="floating">Descripción</ion-label>
-    <ion-input
-      type="text"
-      name="descripcion"
-      [(ngModel)]="editooperacion.descripcion"
-      placeholder="Descripción"
-      required
-      minlength="5"
-      #descripcion="ngModel">
-    </ion-input>
-    <ion-note *ngIf="descripcion.invalid && descripcion.touched" color="danger">
-      Sólo letras y mínimo de 5 caracteres
-    </ion-note>
+    <ion-item class="form-group">
+      
+      <ion-input
+        label="Descripción"
+        name="descripcion"
+        [(ngModel)]="editooperacion.descripcion"
+        placeholder="Descripción"
+        required
+        minlength="5"
+        #descripcion="ngModel"
+      ></ion-input>
+      <ion-note *ngIf="descripcion.invalid && descripcion.touched" color="danger">
+        Sólo letras y mínimo de 5 caracteres
+      </ion-note>
+    </ion-item>
 
     <!-- Cantidad -->
-    <ion-label position="floating">Cantidad</ion-label>
-    <ion-input
-      type="number"
-      name="cantidad"
-      [(ngModel)]="editooperacion.cantidad"
-      placeholder="Cantidad"
-      required
-      pattern="[0-9]{1,}"
-      #cantidad="ngModel">
-    </ion-input>
+    <ion-item class="form-group">
+      
+      <ion-input
+        label="Cantidad"
+        type="number"
+        name="cantidad"
+        [(ngModel)]="editooperacion.cantidad"
+        placeholder="Cantidad"
+        required
+        pattern="[0-9]{1,}"
+        #cantidad="ngModel"
+      ></ion-input>
+    </ion-item>
 
     <!-- Categoría -->
-    <ion-label position="floating">Categoría</ion-label>
-    <ion-select
-      name="categoria"
-      [(ngModel)]="editooperacion.categoria"
-      required
-      #categoria="ngModel">
-      <ion-select-option *ngFor="let cat of categorias" [value]="cat.nombre">{{ cat.nombre }}</ion-select-option>
-    </ion-select>
-    <ion-note *ngIf="categoria.invalid && categoria.touched" color="danger">Campo requerido</ion-note>
+    <ion-item class="form-group">
+      
+      <ion-select
+        label="Categoría"
+        name="categoria"
+        [(ngModel)]="editooperacion.categoria"
+        required
+        #categoria="ngModel"
+      >
+        <ion-select-option *ngFor="let cat of categorias" [value]="cat.nombre">{{ cat.nombre }}</ion-select-option>
+      </ion-select>
+      <ion-note *ngIf="categoria.invalid && categoria.touched" color="danger">Campo requerido</ion-note>
+    </ion-item>
 
     <!-- Fecha -->
-    <ion-label position="floating">Fecha</ion-label>
-    <ion-datetime
-      displayFormat="YYYY-MM-DD"
-      name="fecha"
-      [(ngModel)]="editooperacion.fecha"
-      required>
-    </ion-datetime>
+    <ion-item class="form-group">
+      
+      <ion-datetime
+        displayFormat="YYYY-MM-DDTHH:mmZ"
+        name="fecha"
+        [(ngModel)]="editooperacion.fecha"
+        required
+      ></ion-datetime>
+    </ion-item>
 
     <ion-button (click)="guardarCambios()" expand="full" color="primary" class="ion-margin-top">Guardar</ion-button>
-  </ion-item>
+  </form>
 </ion-content>

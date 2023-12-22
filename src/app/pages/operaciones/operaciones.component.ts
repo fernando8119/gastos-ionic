@@ -2,8 +2,8 @@ import { Component, OnInit} from '@angular/core';
 import { Operacion } from 'src/app/models/operacion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OperacionesService } from 'src/app/services/operaciones.service';
-import Swal from 'sweetalert2';
 import { DatePipe} from '@angular/common';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -20,7 +20,8 @@ export class OperacionesComponent implements OnInit {
   constructor(private operacionesService: OperacionesService,
     private route: ActivatedRoute,
     private datePipe: DatePipe,
-    private router: Router) { }
+    private router: Router,
+    private alertController: AlertController) { }
 
 
 
@@ -43,17 +44,36 @@ export class OperacionesComponent implements OnInit {
 
   }
 
-  borrar(id: string | undefined) {
+  async borrar(id: string | undefined) {
     if (id !== undefined) {
-      
-      
-          this.operacionesService.borrar(id).subscribe(() => {
-            // Elimina el elemento localmente en tu arreglo de operaciones.
-            this.operaciones = this.operaciones.filter(gasto => gasto._id !== id);
-          
-          });
-        }
-      }
+      const alert = await this.alertController.create({
+        header: 'Confirmar',
+        message: '¿Estás seguro de que deseas borrar esta operación?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              // Acción al hacer clic en Cancelar
+            },
+          },
+          {
+            text: 'Borrar',
+            handler: () => {
+              // Acción al hacer clic en Borrar
+              this.operacionesService.borrar(id).subscribe(() => {
+                // Elimina el elemento localmente en tu arreglo de operaciones.
+                this.operaciones = this.operaciones.filter((gasto) => gasto._id !== id);
+              });
+            },
+          },
+        ],
+      });
+
+      await alert.present();
+    }
+  }
     
   
 

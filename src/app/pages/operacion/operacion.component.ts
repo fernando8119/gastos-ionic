@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Operacion } from 'src/app/models/operacion';
 import { OperacionesService } from 'src/app/services/operaciones.service';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import Swal from 'sweetalert2';
 import { CategoriasService } from '../../services/categorias.service';
 import { Categoria } from 'src/app/models/categoria'
 import { Observable } from 'rxjs';
@@ -19,7 +18,7 @@ export class OperacionComponent implements OnInit {
    descripcion: '',
    cantidad:  0,
    categoria: '',
-    fecha: '',
+   fecha: new Date().toISOString(),
 
 
   };
@@ -30,7 +29,9 @@ export class OperacionComponent implements OnInit {
   constructor(private operacionesService: OperacionesService,
     private categoriasService: CategoriasService,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    )
+     {
 
     this.categoriasService.obtenerCategorias().subscribe((categorias) => {
       this.categorias = categorias;
@@ -47,14 +48,14 @@ export class OperacionComponent implements OnInit {
 
   guardar(forma: NgForm) {
 
-    
-
-    this.operacionesService
+  this.operacionesService
   .agregarOperaciones(this.nuevaOperacion)
   .subscribe((resultado: string) => {
-    console.log(resultado);
     this.resultadoOperacion = resultado;
     this.router.navigate(['operacion/']);
+
+    // Actualizamos la detección de cambios
+    
   });
   }
 
