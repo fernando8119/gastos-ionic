@@ -7,22 +7,25 @@
     <ion-card-content>
       <ion-list>
         <ion-list-header>
-          <ion-label>
-          </ion-label>
+          <ion-label class="ion-col-md">Descripción<nav></nav></ion-label>
+          <ion-label class="ion-col-md">Cantidad</ion-label>
+          <ion-label class="ion-col-md">Categoría</ion-label>
+          <ion-label class="ion-col-md">Fecha</ion-label>
         </ion-list-header>
-
-        <ion-item *ngFor="let operacion of operaciones" [ngClass]="getFilaColor(operacion.cantidad)">
-          <ion-label>{{operacion.descripcion}}</ion-label>
-          <ion-label>{{operacion.cantidad}}</ion-label>
-          <ion-label>{{operacion.categoria}}</ion-label>
-          <ion-label>{{operacion.fecha | date:'dd-MM-yyyy' }}</ion-label>
-
-          <ion-buttons slot="end">
-            <ion-button [routerLink]="['/editar-operacion', operacion._id]" fill="outline" size="small">Editar</ion-button>
+        
+        <ion-item *ngFor="let operacion of operaciones | async " [ngClass]="getFilaColor(operacion.cantidad)">
+          <ion-col size-md="6">{{operacion.descripcion}}</ion-col>
+          <ion-col size-md="6">{{operacion.cantidad}}</ion-col>
+          <ion-col size-md="6">{{operacion.categoria}}</ion-col>
+          <ion-col size-md="6">{{operacion.fecha}}</ion-col>
+        
+          <ion-buttons slot="end" class="ion-col-md">
+            <ion-button [routerLink]="['/editar-operacion', operacion._id]" class="ion-col-md">Editar</ion-button>
             <ion-button (click)="borrar(operacion._id)" fill="outline" size="small">Borrar</ion-button>
           </ion-buttons>
         </ion-item>
       </ion-list>
+      
 
       <ion-button (click)="botonNuevo()" expand="full" color="primary" class="ion-margin-top">AÑADIR</ion-button>
     </ion-card-content>

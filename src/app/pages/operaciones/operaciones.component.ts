@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OperacionesService } from 'src/app/services/operaciones.service';
 import { DatePipe} from '@angular/common';
 import { AlertController } from '@ionic/angular';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -12,7 +13,8 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./operaciones.component.scss']
 })
 export class OperacionesComponent implements OnInit {
-  operaciones: Operacion[] = [];
+  operaciones: Observable<Operacion[]> =this.operacionesService.operacionesS
+
   id: string = '';
 
 
@@ -25,21 +27,24 @@ export class OperacionesComponent implements OnInit {
 
 
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.getOperaciones();
+console.log('yaaaaaaaaaaaaaaaaaaa');
+
+    this.operaciones?.subscribe((fefe) => {
+      console.log(fefe);
+      
+    })
   }
   getOperaciones() {
 
-    this.operacionesService.getOperaciones().subscribe((data: Operacion[]) => {
-      this.operaciones = data; // Asigna los datos recuperados del servicio a la variable operaciones
-      //console.log(data);
-    });
+    this.operacionesService.getOperaciones()
   }
 
   getOperacion(_id: string) {
 
     this.operacionesService.getOperacionesById(_id).subscribe((data: Operacion[]) => {
-      this.operaciones = data;
+      // this.operaciones = data;
     });
 
   }
@@ -64,7 +69,7 @@ export class OperacionesComponent implements OnInit {
               // Acción al hacer clic en Borrar
               this.operacionesService.borrar(id).subscribe(() => {
                 // Elimina el elemento localmente en tu arreglo de operaciones.
-                this.operaciones = this.operaciones.filter((gasto) => gasto._id !== id);
+                // this.operaciones = this.operaciones.filter((gasto) => gasto._id !== id);
               });
             },
           },

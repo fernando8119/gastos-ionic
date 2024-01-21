@@ -90,10 +90,10 @@ export class EditarOperacionComponent implements OnInit {
 
   saveChanges() {
     this.operacionesService.editoOperaciones(this.editooperacion).subscribe({
-      next: () => {
-        console.log('Operación editada exitosamente');
+      next: (data) => {
         this.presentAlert('Operación editada exitosamente');
         this.router.navigate(['/operaciones']);
+        this.operacionesService.getOperaciones()
       },
       error: (error) => {
         console.error('Error al editar la operación', error);

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, ReplaySubject, Subject, map, of } from 'rxjs';
 import { Operacion } from '../models/operacion';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
@@ -10,6 +10,8 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class OperacionesService {
+operacionesSubj: ReplaySubject<Operacion[]> = new ReplaySubject();
+  operacionesS: Observable<Operacion[]> = this.operacionesSubj.asObservable();
   apiUrl = 'http://localhost:3000/api/cuentas';
 
   constructor(private http: HttpClient) {}
@@ -27,9 +29,11 @@ export class OperacionesService {
 
   }
 
-  getOperaciones(): Observable<Operacion[]> {
+  getOperaciones() {
 
-    return this.http.get<Operacion[]>(`${this.apiUrl}/operaciones`);
+     this.http.get<Operacion[]>(`${this.apiUrl}/operaciones`).subscribe(data => {
+      this.operacionesSubj.next(data)
+    });
   }
 
 
