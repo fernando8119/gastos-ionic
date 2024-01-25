@@ -4,6 +4,8 @@ import { Observable, ReplaySubject, Subject, map, of } from 'rxjs';
 import { Operacion } from '../models/operacion';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
+import { Operamok } from '../interfaces/operamok.interface';
+import { operamok } from 'src/backend/operamok';
 
 
 @Injectable({
@@ -13,6 +15,8 @@ export class OperacionesService {
 operacionesSubj: ReplaySubject<Operacion[]> = new ReplaySubject();
   operacionesS: Observable<Operacion[]> = this.operacionesSubj.asObservable();
   apiUrl = 'http://localhost:3000/api/cuentas';
+
+  operamok: Operamok = operamok;
 
   constructor(private http: HttpClient) {}
 
@@ -28,6 +32,11 @@ operacionesSubj: ReplaySubject<Operacion[]> = new ReplaySubject();
       );
 
   }
+//get del falso backend
+  getOperamok(): Observable<Operamok> {
+    return of(this.operamok);
+  }
+
 
   getOperaciones() {
 

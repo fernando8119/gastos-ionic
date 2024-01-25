@@ -7,21 +7,36 @@
     <ion-card-content>
       <ion-list>
         <ion-list-header>
-          <ion-label class="ion-col-md">Descripción<nav></nav></ion-label>
-          <ion-label class="ion-col-md">Cantidad</ion-label>
-          <ion-label class="ion-col-md">Categoría</ion-label>
-          <ion-label class="ion-col-md">Fecha</ion-label>
+          <ion-label class="ion-col-md-4">Descripción<nav></nav></ion-label>
+          <ion-label class="ion-col-md-6">Cantidad</ion-label>
+          <ion-label class="ion-col-md-4">Categoría</ion-label>
+          <ion-label class="ion-col-md-6">Fecha</ion-label>
         </ion-list-header>
         
-        <ion-item *ngFor="let operacion of operaciones | async " [ngClass]="getFilaColor(operacion.cantidad)">
-          <ion-col size-md="6">{{operacion.descripcion}}</ion-col>
-          <ion-col size-md="6">{{operacion.cantidad}}</ion-col>
-          <ion-col size-md="6">{{operacion.categoria}}</ion-col>
-          <ion-col size-md="6">{{operacion.fecha}}</ion-col>
+        <!-- <ion-item *ngFor="let operacion of operaciones | async " [ngClass]="getFilaColor(operacion.cantidad)"> -->
+          <ion-item *ngFor="let operacion of operamok">
+          <ion-col size-md="6">{{operacion.Operacion1.descripcion}}</ion-col>
+          <ion-col size-md="6">{{operacion.Operacion1.cantidad}}</ion-col>
+          <ion-col size-md="6">{{operacion.Operacion1.categoria}}</ion-col>
+          <ion-col size-md="6">{{operacion.Operacion1.fecha}}</ion-col>
+
+          <ion-col size-md="6">{{operacion.Operacion2.descripcion}}</ion-col>
+          <ion-col size-md="6">{{operacion.Operacion2.cantidad}}</ion-col>
+          <ion-col size-md="6">{{operacion.Operacion2.categoria}}</ion-col>
+          <ion-col size-md="6">{{operacion.Operacion2.fecha}}</ion-col>
+
+          <ion-col size-md="6">{{operacion.Operacion3.descripcion}}</ion-col>
+          <ion-col size-md="6">{{operacion.Operacion3.cantidad}}</ion-col>
+          <ion-col size-md="6">{{operacion.Operacion3.categoria}}</ion-col>
+          <ion-col size-md="6">{{operacion.Operacion3.fecha}}</ion-col>
         
+         
+
           <ion-buttons slot="end" class="ion-col-md">
-            <ion-button [routerLink]="['/editar-operacion', operacion._id]" class="ion-col-md">Editar</ion-button>
-            <ion-button (click)="borrar(operacion._id)" fill="outline" size="small">Borrar</ion-button>
+            <!-- <ion-button [routerLink]="['/editar-operacion', operacion._id]" class="ion-col-md">Editar</ion-button> -->
+            <ion-button [routerLink]="['/editar-operacion', operamok]" class="ion-col-md">Editar</ion-button>
+            <!-- <ion-button (click)="borrar(operacion._id)" fill="outline" size="small">Borrar</ion-button> -->
+            <ion-button (click)="borrar" fill="outline" size="small">Borrar</ion-button>
           </ion-buttons>
         </ion-item>
       </ion-list>

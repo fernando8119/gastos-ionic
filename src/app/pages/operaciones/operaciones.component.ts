@@ -5,6 +5,8 @@ import { OperacionesService } from 'src/app/services/operaciones.service';
 import { DatePipe} from '@angular/common';
 import { AlertController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { Operamok } from 'src/app/interfaces/operamok.interface';
+import { operamok } from '../../../backend/operamok';
 
 
 @Component({
@@ -13,8 +15,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./operaciones.component.scss']
 })
 export class OperacionesComponent implements OnInit {
-  operaciones: Observable<Operacion[]> =this.operacionesService.operacionesS
-
+  //operaciones: Observable<Operacion[]> =this.operacionesService.operacionesS
+  operamok: Operamok[] = [];
   id: string = '';
 
 
@@ -28,14 +30,23 @@ export class OperacionesComponent implements OnInit {
 
 
   ngOnInit(): void {    
-    this.getOperaciones();
-console.log('yaaaaaaaaaaaaaaaaaaa');
 
-    this.operaciones?.subscribe((fefe) => {
-      console.log(fefe);
+    this.getoperamok();
+    console.log('mokeando voy');
+    // this.getOperaciones();
+    // console.log('yaaaaaaaaaaaaaaaaaaa');
+
+    // this.operaciones?.subscribe((fefe) => {
+    //   console.log(fefe);
       
-    })
+    // })
   }
+  getoperamok() {
+
+    this.operacionesService.getOperamok().subscribe((operamok) => (this.operamok=[operamok]));
+
+
+ }
   getOperaciones() {
 
     this.operacionesService.getOperaciones()
