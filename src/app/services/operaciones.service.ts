@@ -51,8 +51,11 @@ operacionesSubj: ReplaySubject<Operacion[]> = new ReplaySubject();
 
 
     return this.http.put(`${this.apiUrl}/operaciones/${operaciones._id}`, operaciones)
-  }
 
+   
+
+  
+  }
   getOperacionesById(id: string): Observable<Operacion[]> {
     return this.http.get<Operacion[]>(`${this.apiUrl}/operaciones/${id}`);
   }
