@@ -1,14 +1,15 @@
-<ion-content>
+<ion-content padding>
+  <ion-grid fixed>
     <ion-header>
       <ion-card-title class="ion-text-center">OPERACIONES TOTALES</ion-card-title>
     </ion-header>
       <ion-list>
         <ion-item>
           <ion-row>
-          <ion-label class="ion-col-md-3">Descripción<nav></nav></ion-label>
-          <ion-label class="ion-col-md-3">Cantidad</ion-label>
-          <ion-label class="ion-col-md-3">Categoría</ion-label>
-          <ion-label class="ion-col-md-3">Fecha</ion-label>
+          <ion-col size-md="3">Descripción</ion-col>
+          <ion-col size-md="3">Cantidad</ion-col>
+          <ion-col size-md="3">Categoría</ion-col>
+          <ion-col size-md="3">Fecha</ion-col>
         </ion-row>
         </ion-item>
         
@@ -43,4 +44,5 @@
       
 
       <ion-button (click)="botonNuevo()" expand="full" color="primary" class="ion-margin-top">AÑADIR</ion-button>
+    </ion-grid>
 </ion-content>
