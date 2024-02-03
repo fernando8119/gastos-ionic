@@ -5,21 +5,21 @@
     </ion-header>
       <ion-list>
         <ion-item>
-          <ion-row>
-          <ion-col size-md="3">Descripción</ion-col>
-          <ion-col size-md="3">Cantidad</ion-col>
-          <ion-col size-md="3">Categoría</ion-col>
-          <ion-col size-md="3">Fecha</ion-col>
+          <ion-row class="row ion-justify-content-evenly ion-text-center">
+          <ion-col>Descripción</ion-col>
+          <ion-col>Cantidad</ion-col>
+          <ion-col>Categoría</ion-col>
+          <ion-col>Fecha</ion-col>
         </ion-row>
         </ion-item>
         
         <!-- <ion-item *ngFor="let operacion of operaciones | async " [ngClass]="getFilaColor(operacion.cantidad)"> -->
           <ion-item *ngFor="let operacion of operamok">
-            <ion-row>
-          <ion-col size-md="3">{{operacion.Operacion1.descripcion}}</ion-col>
-          <ion-col size-md="3">{{operacion.Operacion1.cantidad}}</ion-col>
-          <ion-col size-md="3">{{operacion.Operacion1.categoria}}</ion-col>
-          <ion-col size-md="3">{{operacion.Operacion1.fecha}}</ion-col>
+            <ion-row class="row ion-justify-content-evenly ion-text-center">
+          <ion-col >{{operacion.Operacion1.descripcion}}</ion-col>
+          <ion-col >{{operacion.Operacion1.cantidad}}</ion-col>
+          <ion-col>{{operacion.Operacion1.categoria}}</ion-col>
+          <ion-col >{{operacion.Operacion1.fecha }}</ion-col>
             </ion-row>
         
 
