@@ -20,29 +20,20 @@
           <ion-col size-md="3">{{operacion.Operacion1.cantidad}}</ion-col>
           <ion-col size-md="3">{{operacion.Operacion1.categoria}}</ion-col>
           <ion-col size-md="3">{{operacion.Operacion1.fecha}}</ion-col>
-
-          <ion-col size-md="3">{{operacion.Operacion2.descripcion}}</ion-col>
-          <ion-col size-md="3">{{operacion.Operacion2.cantidad}}</ion-col>
-          <ion-col size-md="3">{{operacion.Operacion2.categoria}}</ion-col>
-          <ion-col size-md="3">{{operacion.Operacion2.fecha}}</ion-col>
-
-          <ion-col size-md="3">{{operacion.Operacion3.descripcion}}</ion-col>
-          <ion-col size-md="3">{{operacion.Operacion3.cantidad}}</ion-col>
-          <ion-col size-md="3">{{operacion.Operacion3.categoria}}</ion-col>
-          <ion-col size-md="3">{{operacion.Operacion3.fecha}}</ion-col>
-        
             </ion-row>
+        
 
-          <ion-buttons slot="end" class="ion-col-md">
-            <!-- <ion-button [routerLink]="['/editar-operacion', operacion._id]" class="ion-col-md">Editar</ion-button> -->
-            <ion-button [routerLink]="['/editar-operacion', operamok]" class="ion-col-md">Editar</ion-button>
-            <!-- <ion-button (click)="borrar(operacion._id)" fill="outline" size="small">Borrar</ion-button> -->
-            <ion-button (click)="borrar" fill="outline" size="small">Borrar</ion-button>
-          </ion-buttons>
+
+          <!-- <ion-button  [routerLink]="['/editar-operacion', operacion._id]">Editar</ion-button>
+              <ion-button size-md="2" (click)="borrar(operacion._id)">Borrar</ion-button> -->
+  
         </ion-item>
+  
       </ion-list>
-      
-
-      <ion-button (click)="botonNuevo()" expand="full" color="primary" class="ion-margin-top">AÑADIR</ion-button>
+  
+  
+      <ion-button (click)="botonNuevo()" color="primary" class="ion-margin-top">AÑADIR</ion-button>
+  
+  
     </ion-grid>
-</ion-content>
+  </ion-content>
