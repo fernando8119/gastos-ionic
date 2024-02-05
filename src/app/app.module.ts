@@ -12,11 +12,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { OperacionesComponent } from './pages/operaciones/operaciones.component';
 import { OperacionComponent } from './pages/operacion/operacion.component';
 import { EditarOperacionComponent } from './pages/editar-operacion/editar-operacion.component';
+import { PeraltadaComponent } from './pages/menu/peraltada.component';
 
 
 
 @NgModule({
-  declarations: [AppComponent,OperacionesComponent,OperacionComponent,EditarOperacionComponent],
+  declarations: [AppComponent,OperacionesComponent,OperacionComponent,EditarOperacionComponent, PeraltadaComponent],
   imports: [
     
     BrowserModule,
