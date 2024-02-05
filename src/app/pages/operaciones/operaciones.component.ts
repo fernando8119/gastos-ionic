@@ -32,19 +32,16 @@ export class OperacionesComponent implements OnInit {
   ngOnInit(): void {    
 
     this.getoperamok();
-    console.log('mokeando voy');
     // this.getOperaciones();
-    // console.log('yaaaaaaaaaaaaaaaaaaa');
-
-    // this.operaciones?.subscribe((fefe) => {
-    //   console.log(fefe);
-      
+    
     // })
   }
   getoperamok() {
 
-    this.operacionesService.getOperamok().subscribe((operamok) => (this.operamok=[operamok]));
+    
 
+    this.operacionesService.getOperamok().subscribe((operamok) => (this.operamok=operamok));
+    
 
  }
   getOperaciones() {

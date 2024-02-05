@@ -1,78 +1,26 @@
 import { Operamok } from 'src/app/interfaces/operamok.interface';
 
-export const operamok: Operamok = {
-
-   Operacion1: {
-
-    descripcion: 'empanadilla',
-    cantidad: 1,
-    categoria: 'horno',
-    fecha: '25-01-2024'
+export const operamok: Operamok[] = [
+   { 
+     descripcion: 'empanadilla',
+     cantidad: 1,
+     categoria: 'horno',
+     fecha: '25-01-2024'
    },
-   Operacion2: {
-
-    descripcion: 'coche',
-    cantidad: 4,
-    categoria: 'automoción',
-    fecha: '25-01-2024'
+   {
+     descripcion: 'pastel',
+     cantidad: 3,
+     categoria: 'reposteria',
+     fecha: '26-01-2024'
    },
-   Operacion3: {
-
-    descripcion: 'café',
-    cantidad: 4,
-    categoria: 'restaurante',
-    fecha: '25-01-2024'
+   {
+     descripcion: 'galleta',
+     cantidad: 5,
+     categoria: 'snack',
+     fecha: '27-01-2024'
    },
-   Operacion4: {
-
-    descripcion: 'empanadilla',
-    cantidad: 4,
-    categoria: 'horno',
-    fecha: '25-01-2024'
-   },
-   Operacion5: {
-
-    descripcion: 'empanadilla',
-    cantidad: 4,
-    categoria: 'horno',
-    fecha: '25-01-2024'
-   },
-   Operacion6: {
-
-    descripcion: 'empanadilla',
-    cantidad: 4,
-    categoria: 'horno',
-    fecha: '25-01-2024'
-   },
-   Operacion7: {
-
-    descripcion: 'empanadilla',
-    cantidad: 4,
-    categoria: 'horno',
-    fecha: '25-01-2024'
-   },
-   Operacion8: {
-
-    descripcion: 'empanadilla',
-    cantidad: 4,
-    categoria: 'horno',
-    fecha: '25-01-2024'
-   },
-   Operacion9: {
-
-    descripcion: 'empanadilla',
-    cantidad: 4,
-    categoria: 'horno',
-    fecha: '25-01-2024'
-   },
-   Operacion10: {
-
-    descripcion: 'empanadilla',
-    cantidad: 4,
-    categoria: 'horno',
-    fecha: '25-01-2024'
-   }
-  }
+   
+ ];
 
 
 

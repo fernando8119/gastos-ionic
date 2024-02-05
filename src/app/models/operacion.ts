@@ -9,3 +9,5 @@ export interface Operacion {
   //tipo: { type: String, enum: ['ingreso'] };
   _id?: string;
 }
+
+
