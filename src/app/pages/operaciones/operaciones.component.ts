@@ -15,6 +15,11 @@ import { operamok } from '../../../backend/operamok';
   styleUrls: ['./operaciones.component.scss']
 })
 export class OperacionesComponent implements OnInit {
+
+  public appPages = [
+    { title: 'Gastos', url: '/folder/gastos', icon: 'heart' },
+
+  ];
   //operaciones: Observable<Operacion[]> =this.operacionesService.operacionesS
   operamok: Operamok[] = [];
   id: string = '';
@@ -24,24 +29,26 @@ export class OperacionesComponent implements OnInit {
   constructor(private operacionesService: OperacionesService,
     private route: ActivatedRoute,
     private datePipe: DatePipe,
-    private router: Router,
-    private alertController: AlertController) { }
+    public router: Router,
+    private alertController: AlertController)
+
+    { }
 
 
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
 
     this.getoperamok();
     // this.getOperaciones();
-    
+
     // })
   }
   getoperamok() {
 
-    
+
 
     this.operacionesService.getOperamok().subscribe((operamok) => (this.operamok=operamok));
-    
+
 
  }
   getOperaciones() {
@@ -87,8 +94,8 @@ export class OperacionesComponent implements OnInit {
       await alert.present();
     }
   }
-    
-  
+
+
 
   getFilaColor(cantidad: number): string {
     return cantidad >= 0 ? 'positivo' : 'negativo';

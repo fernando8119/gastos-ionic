@@ -1,8 +1,8 @@
 <ion-content padding>
   <ion-grid fixed>
-    
+
       <ion-title class="ion-text-center">OPERACIONES TOTALES</ion-title>
-    
+
       <ion-list>
         <ion-item>
           <ion-row class="row ion-justify-content-evenly ion-text-center">
@@ -12,7 +12,7 @@
           <ion-col>Fecha</ion-col>
         </ion-row>
         </ion-item>
-        
+
         <!-- <ion-item *ngFor="let operacion of operaciones | async " [ngClass]="getFilaColor(operacion.cantidad)"> -->
           <ion-item *ngFor="let operacion of operamok">
             <ion-row class="row ion-justify-content-evenly ion-text-center">
@@ -21,19 +21,42 @@
           <ion-col>{{operacion.categoria}}</ion-col>
           <ion-col >{{operacion.fecha }}</ion-col>
             </ion-row>
-        
+
 
 
           <!-- <ion-button  [routerLink]="['/editar-operacion', operacion._id]">Editar</ion-button>
               <ion-button size-md="2" (click)="borrar(operacion._id)">Borrar</ion-button> -->
-  
+
         </ion-item>
-  
+
+
+
       </ion-list>
-  
-  
+
+      <ion-tabs>
+        <ion-tab-bar slot="bottom">
+          <ion-tab-button routerLink="operaciones" [ngClass]="{ 'activo': router.isActive('operaciones', true) }">
+            <ion-icon  name="options-outline"></ion-icon>
+            Operaciones
+          </ion-tab-button>
+          <ion-tab-button routerLink="/folder/gastos" >
+         <ion-icon   name="cash-outline"></ion-icon>
+           Gastos
+          </ion-tab-button>
+          <ion-tab-button routerLink="/folder/grafica">
+            <ion-icon  name="pie-chart-outline"></ion-icon>
+            Gráfica
+          </ion-tab-button>
+          <ion-tab-button routerLink="/folder/presupuesto">
+            <ion-icon  name="pencil-outline"></ion-icon>
+            Presupuesto
+          </ion-tab-button>
+        </ion-tab-bar>
+      </ion-tabs>
+
+
       <ion-button (click)="botonNuevo()" color="primary" class="ion-margin-top">AÑADIR</ion-button>
-  
-  
+
+
     </ion-grid>
   </ion-content>

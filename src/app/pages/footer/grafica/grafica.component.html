@@ -1,0 +1,35 @@
+<ion-app>
+  <header>
+  <ion-title class="center"></ion-title>
+  </header>
+  <ion-content>
+    <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+
+
+        <ion-label>{{ p.title }}</ion-label>
+
+    </ion-menu-toggle>
+
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button routerLink="operaciones">
+          <ion-icon name="options-outline"></ion-icon>
+          Operaciones
+        </ion-tab-button>
+        <ion-tab-button routerLink="/folder/gastos">
+       <ion-icon name="cash-outline"></ion-icon>
+         Gastos
+        </ion-tab-button>
+        <ion-tab-button routerLink="/folder/grafica" [ngClass]="{ 'activo': router.isActive('/folder/grafica', true) }">
+          <ion-icon name="pie-chart-outline"></ion-icon>
+          Gráfica
+        </ion-tab-button>
+        <ion-tab-button routerLink="/folder/presupuesto">
+          <ion-icon name="pencil-outline"></ion-icon>
+          Presupuesto
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-content>
+
+  </ion-app>
