@@ -13,8 +13,8 @@
         </ion-row>
         </ion-item>
 
-        <!-- <ion-item *ngFor="let operacion of operaciones | async " [ngClass]="getFilaColor(operacion.cantidad)"> -->
-          <ion-item *ngFor="let operacion of operamok">
+        <ion-item *ngFor="let operacion of operaciones | async " [ngClass]="getFilaColor(operacion.cantidad)">
+          <!-- <ion-item *ngFor="let operacion of operamok"> -->
             <ion-row class="row ion-justify-content-evenly ion-text-center">
           <ion-col >{{operacion.descripcion}}</ion-col>
           <ion-col >{{operacion.cantidad}}</ion-col>

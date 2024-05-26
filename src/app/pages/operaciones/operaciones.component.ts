@@ -20,8 +20,8 @@ export class OperacionesComponent implements OnInit {
     { title: 'Gastos', url: '/folder/gastos', icon: 'heart' },
 
   ];
-  //operaciones: Observable<Operacion[]> =this.operacionesService.operacionesS
-  operamok: Operamok[] = [];
+  operaciones: Observable<Operacion[]> =this.operacionesService.operacionesS
+  //operamok: Operamok[] = [];
   id: string = '';
 
 
@@ -38,19 +38,19 @@ export class OperacionesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getoperamok();
-    // this.getOperaciones();
+    //this.getoperamok();
+    this.getOperaciones();
 
     // })
   }
-  getoperamok() {
+//   getoperamok() {
 
 
 
-    this.operacionesService.getOperamok().subscribe((operamok) => (this.operamok=operamok));
+//     this.operacionesService.getOperamok().subscribe((operamok) => (this.operamok=operamok));
 
 
- }
+//  }
   getOperaciones() {
 
     this.operacionesService.getOperaciones()
