@@ -15,13 +15,14 @@ import { EditarOperacionComponent } from './pages/editar-operacion/editar-operac
 import { PeraltadaComponent } from './pages/menu/peraltada.component';
 import { OperacionesFooterComponent } from './pages/footer/operacionesFooter/operacionesFooter.component';
 import { GastosComponent } from './pages/footer/gastos/gastos.component';
+import { GastoComponent } from './pages/gasto/gasto.component';
 import { GraficaComponent } from './pages/footer/grafica/grafica.component';
 import { PresupuestoComponent } from './pages/footer/presupuesto/presupuesto.component';
 
 
 
 @NgModule({
-  declarations: [AppComponent,OperacionesComponent,OperacionComponent,EditarOperacionComponent, PeraltadaComponent, OperacionesFooterComponent, GastosComponent, GraficaComponent, PresupuestoComponent],
+  declarations: [AppComponent,OperacionesComponent,OperacionComponent,EditarOperacionComponent, PeraltadaComponent, OperacionesFooterComponent, GastosComponent, GastoComponent, GraficaComponent, PresupuestoComponent],
   imports: [
 
     BrowserModule,

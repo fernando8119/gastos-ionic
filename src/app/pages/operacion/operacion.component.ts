@@ -42,8 +42,8 @@ export class OperacionComponent implements OnInit {
 
 
   ngOnInit(): void {
-
-    }
+    this.operacionesService
+}
 
 
   guardar(forma: NgForm) {
@@ -55,7 +55,7 @@ export class OperacionComponent implements OnInit {
     this.router.navigate(['operacion/']);
 
     // Actualizamos la detección de cambios
-    
+
   });
   }
 

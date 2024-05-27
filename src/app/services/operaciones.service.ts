@@ -16,7 +16,7 @@ operacionesSubj: ReplaySubject<Operacion[]> = new ReplaySubject();
   operacionesS: Observable<Operacion[]> = this.operacionesSubj.asObservable();
   apiUrl = 'http://localhost:3000/api/cuentas';
 
-  operamok: Operamok[] = []; 
+  operamok: Operamok[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -34,9 +34,9 @@ operacionesSubj: ReplaySubject<Operacion[]> = new ReplaySubject();
   }
 //get del falso backend
   getOperamok(): Observable<Operamok[]> {
-    
+
     return of(operamok);
-    
+
   }
 
 
@@ -54,9 +54,9 @@ operacionesSubj: ReplaySubject<Operacion[]> = new ReplaySubject();
 
     return this.http.put(`${this.apiUrl}/operaciones/${operaciones._id}`, operaciones)
 
-   
 
-  
+
+
   }
   getOperacionesById(id: string): Observable<Operacion[]> {
     return this.http.get<Operacion[]>(`${this.apiUrl}/operaciones/${id}`);

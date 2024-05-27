@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+
+
+      <form (ngSubmit)="guardar(forma)" #forma="ngForm">
+
+        <ion-item>
+
+          <ion-input
+            label="Descripción"
+            type="text"
+            name="descripcion"
+            [(ngModel)]="nuevaOperacion.descripcion"
+            placeholder="Descripción"
+            required
+            minlength="5"
+            #descripcion="ngModel"
+          ></ion-input>
+          <ion-text *ngIf="descripcion.invalid && descripcion.touched" color="danger">Sólo letras y mínimo de 5</ion-text>
+        </ion-item>
+
+        <ion-item>
+
+          <ion-input
+            label="Cantidad"
+            type="text"
+            name="cantidad"
+            [(ngModel)]="nuevaOperacion.cantidad"
+            placeholder="Cantidad"
+            required
+            pattern="[0-9]{1,}"
+            #cantidad="ngModel"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+
+          <ion-select
+            label="Categoría"
+            name="categoria"
+            [(ngModel)]="nuevaOperacion.categoria"
+            required
+            #categoria="ngModel"
+          >
+            <ion-select-option *ngFor="let cat of categorias" [value]="cat.nombre">{{ cat.nombre }}</ion-select-option>
+          </ion-select>
+          <ion-text *ngIf="categoria.invalid && categoria.touched" color="danger">Campo requerido</ion-text>
+        </ion-item>
+
+        <ion-item>
+
+          <ion-datetime
+            displayFormat="YYYY-MM-DDTHH:mmZ"
+            pickerFormat="YYYY-MM-DDTHH:mmZ"
+            name="fecha"
+            [(ngModel)]="nuevaOperacion.fecha"
+            required
+          ></ion-datetime>
+        </ion-item>
+
+        <ion-row>
+          <ion-col>
+            <ion-button expand="full" routerLink="/gasto/nuevo" type="submit">AÑADO GASTO</ion-button>
+          </ion-col>
+        </ion-row>
+
+      </form>
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>

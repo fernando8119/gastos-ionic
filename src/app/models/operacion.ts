@@ -8,6 +8,7 @@ export interface Operacion {
   fecha: string;
   //tipo: { type: String, enum: ['ingreso'] };
   _id?: string;
+
 }
 
 
