@@ -12,7 +12,11 @@ export class CategoriasService {
       { id: 1, nombre: 'Restaurantes' },
       { id: 2, nombre: 'Ropa' },
       { id: 3, nombre: 'Ocio' },
-      { id: 4, nombre: 'Impuestos' },
+      { id: 4, nombre: 'Sanidad' },
+      { id: 5, nombre: 'Impuestos' },
+      { id: 6, nombre: 'Comida' },
+      { id: 7, nombre: 'Seguros' },
+      { id: 8, nombre: 'Regalos' },
 
     ];
     return of(categorias);

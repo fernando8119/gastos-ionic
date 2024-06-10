@@ -1,6 +1,8 @@
 <ion-app>
   <ion-header>
-    <ion-title class="center"></ion-title>
+    <ion-toolbar>
+      <ion-title class="center">Gastos e Ingresos</ion-title>
+    </ion-toolbar>
   </ion-header>
   <ion-content>
     <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
@@ -9,21 +11,21 @@
 
     <ion-tabs>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button routerLink="operaciones">
+        <ion-tab-button tab="operaciones" routerLink="/operaciones">
           <ion-icon name="options-outline"></ion-icon>
-          Operaciones
+          <ion-label>Operaciones</ion-label>
         </ion-tab-button>
-        <ion-tab-button routerLink="/folder/gastos" [ngClass]="{ 'activo': router.isActive('/folder/gastos', true) }">
+        <ion-tab-button tab="gastos" routerLink="/folder/gastos" [ngClass]="{ 'activo': router.isActive('/folder/gastos', true) }">
           <ion-icon name="cash-outline"></ion-icon>
-          Gastos
+          <ion-label>Gastos</ion-label>
         </ion-tab-button>
-        <ion-tab-button routerLink="/folder/grafica">
+        <ion-tab-button tab="grafica" routerLink="/folder/grafica">
           <ion-icon name="pie-chart-outline"></ion-icon>
-          Gráfica
+          <ion-label>Gráfica</ion-label>
         </ion-tab-button>
-        <ion-tab-button routerLink="/folder/presupuesto">
+        <ion-tab-button tab="presupuesto" routerLink="/folder/presupuesto">
           <ion-icon name="pencil-outline"></ion-icon>
-          Presupuesto
+          <ion-label>Presupuesto</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
@@ -61,8 +63,10 @@
             <ion-datetime displayFormat="DD/MM/YYYY" formControlName="fecha"></ion-datetime>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Categoría</ion-label>
-            <ion-input formControlName="categoria"></ion-input>
+            <ion-label>Categoría</ion-label>
+            <ion-select formControlName="categoria">
+              <ion-select-option *ngFor="let cat of categorias" [value]="cat.nombre">{{ cat.nombre }}</ion-select-option>
+            </ion-select>
           </ion-item>
           <ion-button expand="full" type="submit" [disabled]="!operacionForm.valid">Añadir</ion-button>
         </form>
