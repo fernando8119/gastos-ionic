@@ -46,6 +46,7 @@ export class GastosComponent implements OnInit {
     this.categoriasService.obtenerCategorias().subscribe((categorias) => {
       this.categorias = categorias;
     });
+    this.cargarOperaciones();
   }
 
   abrirFormulario() {
@@ -74,8 +75,24 @@ export class GastosComponent implements OnInit {
         this.totalIngresos += cantidad;
       }
 
+      this.guardarOperaciones();
       this.mostrarFormulario = false;
       this.operacionForm.reset();
+    }
+  }
+
+  guardarOperaciones() {
+    localStorage.setItem('operaciones', JSON.stringify(this.operaciones));
+    localStorage.setItem('totalGastos', JSON.stringify(this.totalGastos));
+    localStorage.setItem('totalIngresos', JSON.stringify(this.totalIngresos));
+  }
+
+  cargarOperaciones() {
+    const operacionesGuardadas = localStorage.getItem('operaciones');
+    if (operacionesGuardadas) {
+      this.operaciones = JSON.parse(operacionesGuardadas);
+      this.totalGastos = this.operaciones.filter(op => op.tipo === 'gasto').reduce((sum, op) => sum + op.cantidad, 0);
+      this.totalIngresos = this.operaciones.filter(op => op.tipo === 'ingreso').reduce((sum, op) => sum + op.cantidad, 0);
     }
   }
 }
