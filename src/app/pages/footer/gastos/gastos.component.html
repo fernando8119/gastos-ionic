@@ -49,7 +49,7 @@
         </ion-button>
 
         <!-- Formulario para añadir gasto o ingreso -->
-        <form [formGroup]="operacionForm" *ngIf="mostrarFormulario" (ngSubmit)="agregarOperacion()">
+        <form [formGroup]="operacionForm" *ngIf="mostrarFormulario" (ngSubmit)="agregarGastos()">
           <ion-item>
             <ion-label position="floating">Descripción</ion-label>
             <ion-input formControlName="descripcion"></ion-input>

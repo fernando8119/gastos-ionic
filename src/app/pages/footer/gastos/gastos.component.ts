@@ -3,12 +3,15 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Categoria } from 'src/app/models/categoria';
 import { CategoriasService } from 'src/app/services/categorias.service';
+import { OperacionesService } from 'src/app/services/operaciones.service';
+import { Gasto } from 'src/app/models/gasto';
+
 
 interface Operacion {
   cantidad: number;
   categoria: string; // Cambié 'categorias' a 'categoria' para concordar con el HTML
   descripcion: string;
-  fecha: Date;
+  fecha: string;
   tipo: 'ingreso' | 'gasto';
 }
 
@@ -22,7 +25,7 @@ export class GastosComponent implements OnInit {
     { title: 'Gastos', url: '/folder/gastos' },
   ];
 
-  operaciones: Operacion[] = [];
+  operaciones: Gasto[] = [];
   operacionForm: FormGroup;
   mostrarFormulario: boolean = false;
   totalGastos: number = 0; // Total acumulado de gastos
@@ -32,7 +35,8 @@ export class GastosComponent implements OnInit {
   constructor(
     public router: Router,
     private fb: FormBuilder,
-    private categoriasService: CategoriasService
+    private categoriasService: CategoriasService,
+    private operacionesService: OperacionesService // Inyectar el nuevo servicio
   ) {
     this.operacionForm = this.fb.group({
       descripcion: ['', Validators.required],
@@ -46,14 +50,15 @@ export class GastosComponent implements OnInit {
     this.categoriasService.obtenerCategorias().subscribe((categorias) => {
       this.categorias = categorias;
     });
-    this.cargarOperaciones();
+
+
   }
 
   abrirFormulario() {
     this.mostrarFormulario = true;
   }
 
-  agregarOperacion() {
+  agregarGastos() {
     if (this.operacionForm.valid) {
       const cantidad = parseFloat(this.operacionForm.value.cantidad);
       const tipoOperacion = cantidad >= 0 ? 'ingreso' : 'gasto';
@@ -62,9 +67,13 @@ export class GastosComponent implements OnInit {
         cantidad: cantidad,
         categoria: this.operacionForm.value.categoria, // Cambié 'categorias' a 'categoria'
         descripcion: this.operacionForm.value.descripcion,
-        fecha: new Date(this.operacionForm.value.fecha),
+        fecha: new Date(this.operacionForm.value.fecha).toISOString(),
         tipo: tipoOperacion,
       };
+      // Llamar al servicio para guardar la operación en el backend
+      this.operacionesService.agregarOperaciones(operacion).subscribe(
+        (resultado: string) => {
+          console.log('Operación guardada:', resultado);
 
       this.operaciones.push(operacion);
 
@@ -75,24 +84,14 @@ export class GastosComponent implements OnInit {
         this.totalIngresos += cantidad;
       }
 
-      this.guardarOperaciones();
       this.mostrarFormulario = false;
       this.operacionForm.reset();
+    },
+    (error) => {
+      console.error('Error al guardar la operación:', error);
     }
-  }
+  );
+}
+}
 
-  guardarOperaciones() {
-    localStorage.setItem('operaciones', JSON.stringify(this.operaciones));
-    localStorage.setItem('totalGastos', JSON.stringify(this.totalGastos));
-    localStorage.setItem('totalIngresos', JSON.stringify(this.totalIngresos));
-  }
-
-  cargarOperaciones() {
-    const operacionesGuardadas = localStorage.getItem('operaciones');
-    if (operacionesGuardadas) {
-      this.operaciones = JSON.parse(operacionesGuardadas);
-      this.totalGastos = this.operaciones.filter(op => op.tipo === 'gasto').reduce((sum, op) => sum + op.cantidad, 0);
-      this.totalIngresos = this.operaciones.filter(op => op.tipo === 'ingreso').reduce((sum, op) => sum + op.cantidad, 0);
-    }
-  }
 }
