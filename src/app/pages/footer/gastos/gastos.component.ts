@@ -1,15 +1,15 @@
+
+
+import { GastoService } from 'src/app/services/gasto.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Categoria } from 'src/app/models/categoria';
 import { CategoriasService } from 'src/app/services/categorias.service';
-import { OperacionesService } from 'src/app/services/operaciones.service';
-import { Gasto } from 'src/app/models/gasto';
 
-
-interface Operacion {
+interface Gasto {
   cantidad: number;
-  categoria: string; // Cambié 'categorias' a 'categoria' para concordar con el HTML
+  categoria: string;
   descripcion: string;
   fecha: string;
   tipo: 'ingreso' | 'gasto';
@@ -36,13 +36,13 @@ export class GastosComponent implements OnInit {
     public router: Router,
     private fb: FormBuilder,
     private categoriasService: CategoriasService,
-    private operacionesService: OperacionesService // Inyectar el nuevo servicio
+    private gastoService: GastoService
   ) {
     this.operacionForm = this.fb.group({
       descripcion: ['', Validators.required],
-      cantidad: ['', [Validators.required, Validators.pattern(/^-?\d+(\.\d{1,2})?$/)]], // Acepta números positivos y negativos con hasta dos decimales
+      cantidad: ['', [Validators.required, Validators.pattern(/^-?\d+(\.\d{1,2})?$/)]],
       fecha: ['', Validators.required],
-      categoria: ['', Validators.required], // Cambié 'categorias' a 'categoria'
+      categoria: ['', Validators.required],
     });
   }
 
@@ -51,7 +51,17 @@ export class GastosComponent implements OnInit {
       this.categorias = categorias;
     });
 
+    // Recuperar operaciones guardadas al inicializar el componente
+    this.gastoService.getOperaciones().subscribe((operaciones) => {
+      this.operaciones = operaciones;
+      this.calcularTotales();
+    });
 
+    // Recuperar totales desde el backend
+    this.gastoService.getTotales().subscribe((totales) => {
+      this.totalGastos = totales.totalGastos;
+      this.totalIngresos = totales.totalIngresos;
+    });
   }
 
   abrirFormulario() {
@@ -63,35 +73,56 @@ export class GastosComponent implements OnInit {
       const cantidad = parseFloat(this.operacionForm.value.cantidad);
       const tipoOperacion = cantidad >= 0 ? 'ingreso' : 'gasto';
 
-      const operacion: Operacion = {
+      const operacion: Gasto = {
         cantidad: cantidad,
-        categoria: this.operacionForm.value.categoria, // Cambié 'categorias' a 'categoria'
+        categoria: this.operacionForm.value.categoria,
         descripcion: this.operacionForm.value.descripcion,
         fecha: new Date(this.operacionForm.value.fecha).toISOString(),
         tipo: tipoOperacion,
       };
+
       // Llamar al servicio para guardar la operación en el backend
-      this.operacionesService.agregarOperaciones(operacion).subscribe(
+      this.gastoService.agregarOperaciones(operacion).subscribe(
         (resultado: string) => {
           console.log('Operación guardada:', resultado);
 
-      this.operaciones.push(operacion);
+          this.operaciones.push(operacion);
+          this.calcularTotales();
 
-      // Actualizar el total de gastos e ingresos
-      if (tipoOperacion === 'gasto') {
-        this.totalGastos += cantidad;
-      } else {
-        this.totalIngresos += cantidad;
-      }
-
-      this.mostrarFormulario = false;
-      this.operacionForm.reset();
-    },
-    (error) => {
-      console.error('Error al guardar la operación:', error);
+          this.mostrarFormulario = false;
+          this.operacionForm.reset();
+        },
+        (error) => {
+          console.error('Error al guardar la operación:', error);
+        }
+      );
     }
-  );
-}
-}
+  }
 
+  calcularTotales() {
+    this.totalGastos = 0;
+    this.totalIngresos = 0;
+
+    for (const operacion of this.operaciones) {
+      if (operacion.tipo === 'gasto') {
+        this.totalGastos += operacion.cantidad;
+      } else if (operacion.tipo === 'ingreso') {
+        this.totalIngresos += operacion.cantidad;
+      }
+    }
+
+    // Guardar totales en el backend
+    const totales = {
+      totalGastos: this.totalGastos,
+      totalIngresos: this.totalIngresos
+    };
+    this.gastoService.actualizarTotales(totales).subscribe(
+      () => {
+        console.log('Totales actualizados');
+      },
+      (error) => {
+        console.error('Error al actualizar los totales:', error);
+      }
+    );
+  }
 }
