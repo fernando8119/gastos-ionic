@@ -17,7 +17,7 @@ import { operamok } from '../../../backend/operamok';
 export class OperacionesComponent implements OnInit {
 
   public appPages = [
-    { title: 'Gastos', url: '/folder/gastos', icon: 'heart' },
+    { title: 'Gastos', url: 'folder/gastos', icon: 'heart' },
 
   ];
   operaciones: Observable<Operacion[]> =this.operacionesService.operacionesS

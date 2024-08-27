@@ -61,6 +61,8 @@ export class GastosComponent implements OnInit {
     this.gastoService.getTotales().subscribe((totales) => {
       this.totalGastos = totales.totalGastos;
       this.totalIngresos = totales.totalIngresos;
+      console.log('Total Gastos:', this.totalGastos);
+      console.log('Total Ingresos:', this.totalIngresos);
     });
   }
 
@@ -116,13 +118,8 @@ export class GastosComponent implements OnInit {
       totalGastos: this.totalGastos,
       totalIngresos: this.totalIngresos
     };
-    this.gastoService.actualizarTotales(totales).subscribe(
-      () => {
-        console.log('Totales actualizados');
-      },
-      (error) => {
-        console.error('Error al actualizar los totales:', error);
-      }
-    );
+
+
+    this.gastoService.actualizarTotales(totales).subscribe(); // Manejo de errores y respuestas ya está en el servicio
   }
 }
