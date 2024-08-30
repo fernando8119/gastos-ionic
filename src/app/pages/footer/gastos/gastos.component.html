@@ -1,12 +1,11 @@
 <ion-app>
   <ion-header>
     <ion-toolbar>
-      <ion-title class="center">Gastos e Ingresos</ion-title>
+      <ion-title class="center">OPERACIONES MENSUALES</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
     <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-      <ion-label>{{ p.title }}</ion-label>
     </ion-menu-toggle>
 
     <ion-tabs>
@@ -17,7 +16,7 @@
         </ion-tab-button>
         <ion-tab-button tab="gastos" routerLink="/folder/gastos" [ngClass]="{ 'activo': router.isActive('/folder/gastos', true) }">
           <ion-icon name="cash-outline"></ion-icon>
-          <ion-label>Gastos</ion-label>
+          <ion-label>Meses</ion-label>
         </ion-tab-button>
         <ion-tab-button tab="grafica" routerLink="/folder/grafica">
           <ion-icon name="pie-chart-outline"></ion-icon>
@@ -32,7 +31,6 @@
 
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Gastos e Ingresos</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <!-- Botón azul fijo para añadir -->
@@ -40,12 +38,12 @@
 
         <!-- Botón rojo para mostrar el total de gastos -->
         <ion-button color="danger">
-          Total Gastos: {{ totalGastos | currency:'EUR' }}
+          Total Gastos: {{ totalGastos | number:'1.2-2' }} €
         </ion-button>
 
         <!-- Botón verde para mostrar el total de ingresos -->
         <ion-button color="success">
-          Total Ingresos: {{ totalIngresos | currency:'EUR' }}
+          Total Ingresos: {{ totalIngresos | number:'1.2-2' }} €
         </ion-button>
 
         <!-- Formulario para añadir gasto o ingreso -->
@@ -76,11 +74,11 @@
     <!-- Lista de operaciones en la tabla -->
     <ion-list *ngIf="operaciones.length > 0">
       <ion-list-header>
-        <ion-label>Operaciones</ion-label>
       </ion-list-header>
       <ion-item *ngFor="let operacion of operaciones">
         <ion-label>
-          {{ operacion.descripcion }} - {{ operacion.cantidad | currency:'EUR' }} - {{ operacion.categoria }} - {{ operacion.fecha | date }}
+          {{ operacion.descripcion }} - {{ operacion.cantidad | number:'1.2-2' }} € - {{ operacion.categoria }} - {{ operacion.fecha | date:'dd-MM-yyyy' }}
+
           <ion-note slot="end" *ngIf="operacion.tipo === 'ingreso'" color="success">Ingreso</ion-note>
           <ion-note slot="end" *ngIf="operacion.tipo === 'gasto'" color="danger">Gasto</ion-note>
         </ion-label>
