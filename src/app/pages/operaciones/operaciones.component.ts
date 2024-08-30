@@ -98,7 +98,7 @@ export class OperacionesComponent implements OnInit {
 
 
   getFilaColor(cantidad: number): string {
-    return cantidad >= 0 ? 'positivo' : 'negativo';
+    return cantidad > 0 ? 'ingreso' : 'gasto';
   }
 
   botonNuevo() {

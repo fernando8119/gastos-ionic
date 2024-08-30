@@ -1,10 +1,14 @@
-.negativo {
-    background-color: rgb(255, 0, 55);
-  }
 
-  .positivo {
-    background-color: greenyellow;
-  }
+
+.ingreso {
+  background-color: #d4edda; /* Verde claro */
+  color: #21923b; /* Texto verde oscuro */
+}
+
+.gasto {
+  background-color: #f8d7da; /* Rojo claro */
+  color: #d12031; /* Texto rojo oscuro */
+}
 
   .row {
     width: 100%;
