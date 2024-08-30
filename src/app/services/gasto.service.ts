@@ -1,27 +1,4 @@
-// import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
-// import { Observable, ReplaySubject, Subject, map, of } from 'rxjs';
-// import { Gasto } from '../models/gasto';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class GastoService {
-//   operacionesSubj: ReplaySubject<Gasto[]> = new ReplaySubject();
-//   operacionesS: Observable<Gasto[]> = this.operacionesSubj.asObservable();
-//   apiUrl = 'http://localhost:3000/api/cuentas';
-
-//   constructor(private http: HttpClient) { }
-
-//   getOperaciones(): Observable<Gasto[]> {
-//     return this.http.get<Gasto[]>(`${this.apiUrl}/operaciones`)
-//   }
-
-//   agregarOperaciones(operaciones: Gasto): Observable<string> {
-//     return this.http.post(`${this.apiUrl}/operaciones`, operaciones, { responseType: 'text' })
-//   }
-
-// }
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';

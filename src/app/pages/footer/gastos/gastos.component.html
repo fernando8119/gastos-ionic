@@ -40,12 +40,12 @@
 
         <!-- Botón rojo para mostrar el total de gastos -->
         <ion-button color="danger">
-          Total Gastos: {{ totalGastos | currency }}
+          Total Gastos: {{ totalGastos | currency:'EUR' }}
         </ion-button>
 
         <!-- Botón verde para mostrar el total de ingresos -->
         <ion-button color="success">
-          Total Ingresos: {{ totalIngresos | currency }}
+          Total Ingresos: {{ totalIngresos | currency:'EUR' }}
         </ion-button>
 
         <!-- Formulario para añadir gasto o ingreso -->
@@ -80,7 +80,7 @@
       </ion-list-header>
       <ion-item *ngFor="let operacion of operaciones">
         <ion-label>
-          {{ operacion.descripcion }} - {{ operacion.cantidad | currency }} - {{ operacion.categoria }} - {{ operacion.fecha | date }}
+          {{ operacion.descripcion }} - {{ operacion.cantidad | currency:'EUR' }} - {{ operacion.categoria }} - {{ operacion.fecha | date }}
           <ion-note slot="end" *ngIf="operacion.tipo === 'ingreso'" color="success">Ingreso</ion-note>
           <ion-note slot="end" *ngIf="operacion.tipo === 'gasto'" color="danger">Gasto</ion-note>
         </ion-label>
