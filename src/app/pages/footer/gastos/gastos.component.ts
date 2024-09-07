@@ -1,42 +1,39 @@
-
-
-import { GastoService } from 'src/app/services/gasto.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { GastoService } from 'src/app/services/gasto.service';
 import { Categoria } from 'src/app/models/categoria';
 import { CategoriasService } from 'src/app/services/categorias.service';
+import { Router } from '@angular/router';
 
 interface Gasto {
-  cantidad: number;
-  categoria: string;
   descripcion: string;
+  cantidad: number;
   fecha: string;
+  categoria: string;
   tipo: 'ingreso' | 'gasto';
 }
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'gastos.component.html',
-  styleUrls: ['gastos.component.scss'],
+  selector: 'app-gastos',
+  templateUrl: './gastos.component.html',
+  styleUrls: ['./gastos.component.scss'],
 })
 export class GastosComponent implements OnInit {
-  public appPages = [
-    { title: 'Gastos', url: '/folder/gastos' },
-  ];
-
+  meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+  mesSeleccionado: string = '';
   operaciones: Gasto[] = [];
+  operacionesFiltradas: Gasto[] = [];
+  totalGastos: number = 0;
+  totalIngresos: number = 0;
   operacionForm: FormGroup;
   mostrarFormulario: boolean = false;
-  totalGastos: number = 0; // Total acumulado de gastos
-  totalIngresos: number = 0; // Total acumulado de ingresos
   categorias: Categoria[] = [];
 
   constructor(
-    public router: Router,
     private fb: FormBuilder,
+    private gastoService: GastoService,
     private categoriasService: CategoriasService,
-    private gastoService: GastoService
+    public router: Router  // Inyecta el Router aquí
   ) {
     this.operacionForm = this.fb.group({
       descripcion: ['', Validators.required],
@@ -46,24 +43,40 @@ export class GastosComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    // Cargar las categorías
     this.categoriasService.obtenerCategorias().subscribe((categorias) => {
       this.categorias = categorias;
     });
 
-    // Recuperar operaciones guardadas al inicializar el componente
+    // Cargar las operaciones desde el servicio
     this.gastoService.getOperaciones().subscribe((operaciones) => {
       this.operaciones = operaciones;
-      this.calcularTotales();
+      this.filtrarOperaciones(); // Filtrar al cargar por el mes seleccionado
     });
+  }
 
-    // Recuperar totales desde el backend
-    this.gastoService.getTotales().subscribe((totales) => {
-      this.totalGastos = totales.totalGastos;
-      this.totalIngresos = totales.totalIngresos;
-      console.log('Total Gastos:', this.totalGastos);
-      console.log('Total Ingresos:', this.totalIngresos);
-    });
+  seleccionarMes(mes: string) {
+    this.mesSeleccionado = mes;
+    this.filtrarOperaciones();
+  }
+
+  filtrarOperaciones() {
+    if (this.mesSeleccionado) {
+      this.operacionesFiltradas = this.operaciones.filter((operacion) => {
+        const fechaOperacion = new Date(operacion.fecha);
+        const mesOperacion = fechaOperacion.getMonth(); // Devuelve el índice del mes (0-11)
+        const anioOperacion = fechaOperacion.getFullYear();
+
+        // Convertir el índice del mes a nombre para comparar con `mesSeleccionado`
+        const mesNombre = this.meses[mesOperacion];
+
+        // Comparar mes y permitir cualquier año
+        return mesNombre === this.mesSeleccionado;
+      });
+
+      this.calcularTotales();
+    }
   }
 
   abrirFormulario() {
@@ -73,53 +86,33 @@ export class GastosComponent implements OnInit {
   agregarGastos() {
     if (this.operacionForm.valid) {
       const cantidad = parseFloat(this.operacionForm.value.cantidad);
-      const tipoOperacion = cantidad >= 0 ? 'ingreso' : 'gasto';
+      const tipoOperacion: 'ingreso' | 'gasto' = cantidad >= 0 ? 'ingreso' : 'gasto';
 
-      const operacion: Gasto = {
-        cantidad: cantidad,
-        categoria: this.operacionForm.value.categoria,
+      const nuevaOperacion: Gasto = {
         descripcion: this.operacionForm.value.descripcion,
+        cantidad: cantidad,
         fecha: new Date(this.operacionForm.value.fecha).toISOString(),
+        categoria: this.operacionForm.value.categoria,
         tipo: tipoOperacion,
       };
 
-      // Llamar al servicio para guardar la operación en el backend
-      this.gastoService.agregarOperaciones(operacion).subscribe(
-        (resultado: string) => {
-          console.log('Operación guardada:', resultado);
-
-          this.operaciones.push(operacion);
-          this.calcularTotales();
-
-          this.mostrarFormulario = false;
-          this.operacionForm.reset();
-        },
-        (error) => {
-          console.error('Error al guardar la operación:', error);
-        }
-      );
+      this.operaciones.push(nuevaOperacion);
+      this.gastoService.agregarOperaciones(nuevaOperacion).subscribe(() => {
+        this.filtrarOperaciones(); // Refrescar la lista de operaciones
+        this.calcularTotales();
+        this.mostrarFormulario = false;
+        this.operacionForm.reset();
+      });
     }
   }
 
   calcularTotales() {
-    this.totalGastos = 0;
-    this.totalIngresos = 0;
+    this.totalGastos = this.operacionesFiltradas
+      .filter(op => op.tipo === 'gasto')
+      .reduce((acc, op) => acc + op.cantidad, 0);
 
-    for (const operacion of this.operaciones) {
-      if (operacion.tipo === 'gasto') {
-        this.totalGastos += operacion.cantidad;
-      } else if (operacion.tipo === 'ingreso') {
-        this.totalIngresos += operacion.cantidad;
-      }
-    }
-
-    // Guardar totales en el backend
-    const totales = {
-      totalGastos: this.totalGastos,
-      totalIngresos: this.totalIngresos
-    };
-
-
-    this.gastoService.actualizarTotales(totales).subscribe(); // Manejo de errores y respuestas ya está en el servicio
+    this.totalIngresos = this.operacionesFiltradas
+      .filter(op => op.tipo === 'ingreso')
+      .reduce((acc, op) => acc + op.cantidad, 0);
   }
 }

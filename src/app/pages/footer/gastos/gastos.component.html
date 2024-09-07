@@ -4,10 +4,9 @@
       <ion-title class="center">OPERACIONES MENSUALES</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content>
-    <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-    </ion-menu-toggle>
 
+  <ion-content>
+    <!-- Barra de navegación -->
     <ion-tabs>
       <ion-tab-bar slot="bottom">
         <ion-tab-button tab="operaciones" routerLink="/operaciones">
@@ -29,59 +28,71 @@
       </ion-tab-bar>
     </ion-tabs>
 
+    <!-- Selección de Meses -->
     <ion-card>
       <ion-card-header>
+        <ion-card-title>Selecciona un Mes</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <!-- Botón azul fijo para añadir -->
-        <ion-button color="primary" (click)="abrirFormulario()">Añadir</ion-button>
+        <!-- Etiquetas de los meses -->
+        <ion-chip *ngFor="let mes of meses" (click)="seleccionarMes(mes)" [color]="mesSeleccionado === mes ? 'primary' : 'light'">
+          {{ mes }}
+        </ion-chip>
 
-        <!-- Botón rojo para mostrar el total de gastos -->
-        <ion-button color="danger">
-          Total Gastos: {{ totalGastos | number:'1.2-2' }} €
-        </ion-button>
-
-        <!-- Botón verde para mostrar el total de ingresos -->
-        <ion-button color="success">
-          Total Ingresos: {{ totalIngresos | number:'1.2-2' }} €
-        </ion-button>
-
-        <!-- Formulario para añadir gasto o ingreso -->
-        <form [formGroup]="operacionForm" *ngIf="mostrarFormulario" (ngSubmit)="agregarGastos()">
-          <ion-item>
-            <ion-label position="floating">Descripción</ion-label>
-            <ion-input formControlName="descripcion"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Cantidad</ion-label>
-            <ion-input type="number" formControlName="cantidad"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Fecha</ion-label>
-            <ion-datetime displayFormat="DD/MM/YYYY" formControlName="fecha"></ion-datetime>
-          </ion-item>
-          <ion-item>
-            <ion-label>Categoría</ion-label>
-            <ion-select formControlName="categoria">
-              <ion-select-option *ngFor="let cat of categorias" [value]="cat.nombre">{{ cat.nombre }}</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-button expand="full" type="submit" [disabled]="!operacionForm.valid">Añadir</ion-button>
-        </form>
+        <!-- Totales para el mes seleccionado -->
+        <div class="totales-container">
+          <ion-button color="danger">
+            Total Gastos: {{ totalGastos | number:'1.2-2' }} €
+          </ion-button>
+          <ion-button color="success">
+            Total Ingresos: {{ totalIngresos | number:'1.2-2' }} €
+          </ion-button>
+        </div>
       </ion-card-content>
     </ion-card>
 
-    <!-- Lista de operaciones en la tabla -->
-    <ion-list *ngIf="operaciones.length > 0">
+    <!-- Botón para abrir el formulario de añadir -->
+    <ion-button expand="block" color="primary" (click)="abrirFormulario()">Añadir</ion-button>
+
+    <!-- Formulario para añadir gasto o ingreso -->
+    <form [formGroup]="operacionForm" *ngIf="mostrarFormulario" (ngSubmit)="agregarGastos()">
+      <ion-item>
+        <ion-label position="floating">Descripción</ion-label>
+        <ion-input formControlName="descripcion"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Cantidad</ion-label>
+        <ion-input type="number" formControlName="cantidad"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Fecha</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="fecha"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Categoría</ion-label>
+        <ion-select formControlName="categoria">
+          <ion-select-option *ngFor="let cat of categorias" [value]="cat.nombre">{{ cat.nombre }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-button expand="full" type="submit" [disabled]="!operacionForm.valid">Añadir</ion-button>
+    </form>
+
+    <!-- Lista de operaciones filtradas por el mes seleccionado -->
+    <ion-list *ngIf="operacionesFiltradas.length > 0">
       <ion-list-header>
+        Operaciones para {{ mesSeleccionado }}
       </ion-list-header>
-      <ion-item *ngFor="let operacion of operaciones">
+      <ion-item *ngFor="let operacion of operacionesFiltradas">
         <ion-label>
           {{ operacion.descripcion }} - {{ operacion.cantidad | number:'1.2-2' }} € - {{ operacion.categoria }} - {{ operacion.fecha | date:'dd-MM-yyyy' }}
-
           <ion-note slot="end" *ngIf="operacion.tipo === 'ingreso'" color="success">Ingreso</ion-note>
           <ion-note slot="end" *ngIf="operacion.tipo === 'gasto'" color="danger">Gasto</ion-note>
         </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="operacionesFiltradas.length === 0">
+      <ion-item>
+        <ion-label>No hay operaciones para {{ mesSeleccionado }}</ion-label>
       </ion-item>
     </ion-list>
   </ion-content>
