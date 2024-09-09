@@ -17,7 +17,7 @@ export class GastoService {
     return this.http.get<Gasto[]>(`${this.apiUrl}/operaciones`);
   }
 
-  agregarOperaciones(operacion: Gasto): Observable<string> {
+  agregarOperaciones(operacion: Gasto): Observable<any> {
     return this.http.post<string>(`${this.apiUrl}/operaciones`, operacion);
   }
 
@@ -25,12 +25,16 @@ export class GastoService {
     return this.http.get<{ totalGastos: number, totalIngresos: number }>(`${this.apiUrl}/operaciones/folder/gastos`);
   }
 
-  actualizarTotales(totales: { totalGastos: number, totalIngresos: number }): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/operaciones/folder/gastos`, totales).pipe(
-      tap({
-        next: () => console.log('Totales actualizados'),
-        error: (error) => console.error('Error al actualizar los totales:', error)
-      })
-    );
+  // actualizarTotales(totales: { totalGastos: number, totalIngresos: number }): Observable<void> {
+  //   return this.http.post<void>(`${this.apiUrl}/operaciones/folder/gastos`, totales).pipe(
+  //     tap({
+  //       next: () => console.log('Totales actualizados'),
+  //       error: (error) => console.error('Error al actualizar los totales:', error)
+  //     })
+  //   );
+  // }
+
+  actualizarTotales(mes: number, anio: number, totalGastos: number, totalIngresos: number) {
+    return this.http.post(`${this.apiUrl}/operaciones/folder/gastos`, { mes, anio, totalGastos, totalIngresos });
   }
 }
