@@ -1,35 +1,90 @@
 <ion-app>
-  <header>
-  <ion-title class="center"></ion-title>
-  </header>
-  <ion-content>
-    <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+  <!-- Menu -->
+  <ion-menu side="start" menuId="first" contentId="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menú</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-menu-toggle auto-hide="false">
+        <ion-item [routerLink]="" routerLinkActive="active">
+          <ion-icon slot="start" [name]=""></ion-icon>
+          <ion-label></ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+    </ion-content>
+  </ion-menu>
 
+  <!-- Main content area -->
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 
-        <ion-label>{{ p.title }}</ion-label>
+  <!-- Tabs -->
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button routerLink="/operaciones">
+        <ion-icon name="options-outline"></ion-icon>
+        Operaciones
+      </ion-tab-button>
+      <ion-tab-button routerLink="/folder/gastos">
+        <ion-icon name="cash-outline"></ion-icon>
+        Gastos
+      </ion-tab-button>
+      <ion-tab-button routerLink="/folder/grafica" [ngClass]="{ 'activo': router.isActive('/folder/grafica', true) }">
+        <ion-icon name="pie-chart-outline"></ion-icon>
+        Gráfica
+      </ion-tab-button>
+      <ion-tab-button routerLink="/folder/presupuesto">
+        <ion-icon name="pencil-outline"></ion-icon>
+        Presupuesto
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 
-    </ion-menu-toggle>
+  <!-- Gráfico en la pestaña de Gráfica -->
+  <ion-content *ngIf="router.url === '/folder/grafica'">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Gráfica de Operaciones</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-    <ion-tabs>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button routerLink="operaciones">
-          <ion-icon name="options-outline"></ion-icon>
-          Operaciones
-        </ion-tab-button>
-        <ion-tab-button routerLink="/folder/gastos">
-       <ion-icon name="cash-outline"></ion-icon>
-         Gastos
-        </ion-tab-button>
-        <ion-tab-button routerLink="/folder/grafica" [ngClass]="{ 'activo': router.isActive('/folder/grafica', true) }">
-          <ion-icon name="pie-chart-outline"></ion-icon>
-          Gráfica
-        </ion-tab-button>
-        <ion-tab-button routerLink="/folder/presupuesto">
-          <ion-icon name="pencil-outline"></ion-icon>
-          Presupuesto
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
+    <ion-content>
+      <!-- Formulario para seleccionar mes y año -->
+      <ion-item>
+        <ion-label>Mes</ion-label>
+        <ion-select [(ngModel)]="mesSeleccionado">
+          <ion-select-option value="1">Enero</ion-select-option>
+          <ion-select-option value="2">Febrero</ion-select-option>
+          <ion-select-option value="3">Marzo</ion-select-option>
+          <ion-select-option value="4">Abril</ion-select-option>
+          <ion-select-option value="5">Mayo</ion-select-option>
+          <ion-select-option value="6">Junio</ion-select-option>
+          <ion-select-option value="7">Julio</ion-select-option>
+          <ion-select-option value="8">Agosto</ion-select-option>
+          <ion-select-option value="9">Septiembre</ion-select-option>
+          <ion-select-option value="10">Octubre</ion-select-option>
+          <ion-select-option value="11">Noviembre</ion-select-option>
+          <ion-select-option value="12">Diciembre</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Año</ion-label>
+        <ion-select [(ngModel)]="anioSeleccionado">
+          <ion-select-option value="2022">2022</ion-select-option>
+          <ion-select-option value="2023">2023</ion-select-option>
+          <ion-select-option value="2024">2024</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Botón para cargar los datos -->
+      <ion-button expand="full" (click)="cargarDatos()">Cargar Datos</ion-button>
+
+      <!-- Contenedor para el gráfico -->
+      <div class="grafico-container">
+        <canvas id="graficoOperaciones" width="400" height="200"></canvas>
+      </div>
+    </ion-content>
   </ion-content>
-
-  </ion-app>
+</ion-app>

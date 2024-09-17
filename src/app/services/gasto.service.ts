@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Gasto } from '../models/gasto';
 import { tap } from 'rxjs/operators';
@@ -24,17 +24,18 @@ export class GastoService {
   getTotales(): Observable<{ totalGastos: number, totalIngresos: number }> {
     return this.http.get<{ totalGastos: number, totalIngresos: number }>(`${this.apiUrl}/operaciones/folder/gastos`);
   }
+  getOperacionesPorMes(mes: number, anio: number): Observable<any> {
+    let params = new HttpParams()
+      .set('mes', mes.toString())
+      .set('anio', anio.toString());
 
-  // actualizarTotales(totales: { totalGastos: number, totalIngresos: number }): Observable<void> {
-  //   return this.http.post<void>(`${this.apiUrl}/operaciones/folder/gastos`, totales).pipe(
-  //     tap({
-  //       next: () => console.log('Totales actualizados'),
-  //       error: (error) => console.error('Error al actualizar los totales:', error)
-  //     })
-  //   );
-  // }
+    return this.http.get<any>(`${this.apiUrl}/operaciones/folder/gastos/mes`, { params });
+  }
+
+
 
   actualizarTotales(mes: number, anio: number, totalGastos: number, totalIngresos: number) {
     return this.http.post(`${this.apiUrl}/operaciones/folder/gastos`, { mes, anio, totalGastos, totalIngresos });
   }
+
 }

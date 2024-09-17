@@ -21,6 +21,7 @@ import { PresupuestoComponent } from './pages/footer/presupuesto/presupuesto.com
 
 
 
+
 @NgModule({
   declarations: [AppComponent,OperacionesComponent,OperacionComponent,EditarOperacionComponent, PeraltadaComponent, OperacionesFooterComponent, GastosComponent, GastoComponent, GraficaComponent, PresupuestoComponent],
   imports: [
@@ -31,7 +32,8 @@ import { PresupuestoComponent } from './pages/footer/presupuesto/presupuesto.com
     FormsModule,
     ReactiveFormsModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+
 
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, DatePipe],
