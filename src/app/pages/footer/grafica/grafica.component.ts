@@ -52,7 +52,7 @@ export class GraficaComponent implements AfterViewInit, OnInit {
             labels: ['Total Gastos', 'Total Ingresos'], // Ajusta las etiquetas según los datos
             datasets: [{
               label: 'Operaciones',
-              data: [data.data.totalGastos, data.data.totalIngresos], // Usar valores correctos
+              data: [data.data.resultado.totalGastos, data.data.resultado.totalIngresos], // Usar valores correctos
               backgroundColor: ['#d12031', '#21923b'],
               borderColor: ['#d12031', '#21923b'],
               borderWidth: 1

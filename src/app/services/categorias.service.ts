@@ -9,14 +9,13 @@ import { Categoria } from '../models/categoria';
 export class CategoriasService {
   obtenerCategorias(): Observable<Categoria[]> {
     const categorias: Categoria[] = [
-      { id: 1, nombre: 'Restaurantes' },
+
+      { id: 1, nombre: 'Nómina' },
       { id: 2, nombre: 'Ropa' },
       { id: 3, nombre: 'Ocio' },
       { id: 4, nombre: 'Sanidad' },
-      { id: 5, nombre: 'Impuestos' },
-      { id: 6, nombre: 'Comida' },
-      { id: 7, nombre: 'Seguros' },
-      { id: 8, nombre: 'Regalos' },
+      { id: 5, nombre: 'Comida' },
+      { id: 6, nombre: 'Regalos' },
 
     ];
     return of(categorias);
