@@ -58,10 +58,30 @@
     <!-- Botón para cargar los datos -->
     <ion-button expand="full" (click)="cargarDatos()">Cargar Datos</ion-button>
 
-    <!-- Contenedor para el gráfico -->
+    <!-- Contenedor para el gráfico de barras de operaciones -->
     <div class="grafico-container">
       <canvas id="graficoOperaciones" width="400" height="200"></canvas>
     </div>
+
+    <!-- Contenedor para el gráfico de pastel de ingresos -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Distribución de Ingresos por Categoría</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <canvas id="graficoIngresos" width="400" height="200"></canvas>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Contenedor para el gráfico de pastel de gastos -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Distribución de Gastos por Categoría</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <canvas id="graficoGastos" width="400" height="200"></canvas>
+      </ion-card-content>
+    </ion-card>
   </ion-content>
 
   <!-- Footer con las pestañas -->
