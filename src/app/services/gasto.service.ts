@@ -1,13 +1,14 @@
-
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Gasto } from '../models/gasto';
-import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class GastoService {
   apiUrl = 'http://localhost:3000/api/cuentas'; // Cambia esto a la URL real de tu backend
 
@@ -28,14 +29,21 @@ export class GastoService {
     let params = new HttpParams()
       .set('mes', mes.toString())
       .set('anio', anio.toString());
-
-    return this.http.get<any>(`${this.apiUrl}/operaciones/folder/gastos/mes`, { params });
+      return this.http.get<any>(`${this.apiUrl}/operaciones/folder/gastos/mes`, { params })
+      .pipe(
+        map(response => response.data), // Mapea solo los datos
+        catchError(this.handleError)
+      );
   }
-
 
 
   actualizarTotales(mes: number, anio: number, totalGastos: number, totalIngresos: number) {
     return this.http.post(`${this.apiUrl}/operaciones/folder/gastos`, { mes, anio, totalGastos, totalIngresos });
+  }
+
+  private handleError(error: any): Observable<never> {
+    console.error('Ocurrió un error:', error);
+    return throwError(error);
   }
 
 }

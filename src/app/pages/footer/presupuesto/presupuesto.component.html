@@ -1,35 +1,56 @@
-<ion-app>
-  <header>
-  <ion-title class="center"></ion-title>
-  </header>
-  <ion-content>
-    <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+<div>
+  <h2>Crear Presupuesto</h2>
+  <form (ngSubmit)="crearPresupuesto()">
+    <input type="number" [(ngModel)]="nuevoPresupuesto.mes" name="mes" placeholder="Mes (1-12)" min="1" max="12" required>
+    <input type="number" [(ngModel)]="nuevoPresupuesto.anio" name="anio" placeholder="Año" min="2020" required>
+    <input type="number" [(ngModel)]="nuevoPresupuesto.cantidadMaxima" name="cantidadMaxima" placeholder="Cantidad Máxima" required>
+    <button type="submit">Crear Presupuesto</button>
+  </form>
+</div>
 
+<div>
+  <h2>Listado de Presupuestos</h2>
+  <ul>
+    <li *ngFor="let presupuesto of presupuestos">
+      {{ presupuesto.mes }}/{{ presupuesto.anio }} - {{ presupuesto.cantidadMaxima }} €
+      <button (click)="selectPresupuesto(presupuesto)">Actualizar</button>
+    </li>
+  </ul>
+</div>
 
-        <ion-label>{{ p.title }}</ion-label>
+<!-- Formulario para actualizar presupuesto -->
+<div *ngIf="presupuestoAActualizar">
+  <h2>Actualizar Presupuesto</h2>
+  <form (ngSubmit)="actualizarPresupuesto(presupuestoAActualizar?._id)">
+    <input type="number" [(ngModel)]="presupuestoAActualizar.mes" name="mesActualizado" placeholder="Mes (1-12)" min="1" max="12" required>
+    <input type="number" [(ngModel)]="presupuestoAActualizar.anio" name="anioActualizado" placeholder="Año" min="2020" required>
+    <input type="number" [(ngModel)]="presupuestoAActualizar.cantidadMaxima" name="cantidadMaximaActualizado" placeholder="Cantidad Máxima" required>
+    <button type="submit" [disabled]="!presupuestoAActualizar?._id">Guardar Cambios</button>
+</form>
+</div>
 
-    </ion-menu-toggle>
+<!-- Mensaje de estado del presupuesto -->
+<div *ngIf="estadoPresupuesto">
+  <h3>{{ estadoPresupuesto }}</h3>
 
-    <ion-tabs>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button routerLink="operaciones">
-          <ion-icon name="options-outline"></ion-icon>
-          Operaciones
-        </ion-tab-button>
-        <ion-tab-button routerLink="/folder/gastos">
-       <ion-icon name="cash-outline"></ion-icon>
-         Gastos
-        </ion-tab-button>
-        <ion-tab-button routerLink="/folder/grafica">
-          <ion-icon name="pie-chart-outline"></ion-icon>
-          Gráfica
-        </ion-tab-button>
-        <ion-tab-button routerLink="/folder/presupuesto" [ngClass]="{ 'activo': router.isActive('/folder/presupuesto', true) }">
-          <ion-icon name="pencil-outline"></ion-icon>
-          Presupuesto
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
-  </ion-content>
-
-  </ion-app>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="operaciones" routerLink="/operaciones">
+        <ion-icon name="options-outline"></ion-icon>
+        <ion-label>Operaciones</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="gastos" routerLink="/folder/gastos" [ngClass]="{ 'activo': router.isActive('/folder/gastos', true) }">
+        <ion-icon name="cash-outline"></ion-icon>
+        <ion-label>Meses</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="grafica" routerLink="/folder/grafica">
+        <ion-icon name="pie-chart-outline"></ion-icon>
+        <ion-label>Gráfica</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="presupuesto" routerLink="/folder/presupuesto">
+        <ion-icon name="pencil-outline"></ion-icon>
+        <ion-label>Presupuesto</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</div>
