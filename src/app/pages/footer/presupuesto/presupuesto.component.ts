@@ -104,7 +104,7 @@ export class PresupuestoComponent implements OnInit {
   compararPresupuesto(totalGastado: number, presupuesto: Presupuesto): void {
     if (totalGastado > presupuesto.cantidadMaxima) {
       this.estadoPresupuesto = '¡Presupuesto sobrepasado!';
-    } else if (totalGastado >= presupuesto.cantidadMaxima * 0.9) {
+    } else if (totalGastado >= presupuesto.cantidadMaxima * 1.8) {
       this.estadoPresupuesto = '¡Casi alcanzado el límite del presupuesto!';
     } else {
       this.estadoPresupuesto = 'Dentro del límite del presupuesto.';
