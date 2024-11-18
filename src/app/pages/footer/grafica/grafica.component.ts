@@ -48,8 +48,8 @@ export class GraficaComponent implements AfterViewInit, OnInit {
       const contextGastos = ctxGastos.getContext('2d');
 
       // Convertir desgloseIngresos y desgloseGastos en arrays
-      const desgloseIngresos = data.data.desgloseIngresos;
-      const desgloseGastos = data.data.desgloseGastos;
+      const desgloseIngresos = data.desgloseIngresos;
+      const desgloseGastos = data.desgloseGastos;
 
       // Obtener las categorías (keys) y cantidades (values), asegurándonos de que las cantidades son números
       const labelsIngresos = Object.keys(desgloseIngresos);
@@ -77,7 +77,7 @@ export class GraficaComponent implements AfterViewInit, OnInit {
             labels: ['Total Gastos', 'Total Ingresos'],
             datasets: [{
               label: 'Operaciones',
-              data: [data.data.resultado.totalGastos, data.data.resultado.totalIngresos],
+              data: [data.totalGastos, data.totalIngresos],
               backgroundColor: ['#d12031', '#21923b'],
               borderColor: ['#d12031', '#21923b'],
               borderWidth: 1
